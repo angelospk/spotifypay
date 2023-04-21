@@ -1,0 +1,165 @@
+<script lang="ts">
+	import { scaleLinear } from 'd3-scale';
+	import type { PageData } from './$types';
+	export let data: PageData;
+	// let data=dedom.body.lines;
+	const d = data.body.lines;
+
+	const timePeriods: String[] = [];
+	// scan d and for its length do something
+	let year = 22;
+	for (let i = 0; i < d.length; i++) {
+		if (i % 2 == 0) {
+			let str = 'Μαρ ' + year.toString();
+			timePeriods.push(str);
+		} else {
+			let str = 'Σεπ ' + year.toString();
+			timePeriods.push(str);
+			year++;
+		}
+	}
+	const xTicks = d.map((person) => person.name);
+	const yTicks = [0, 1, 2];
+	const padding = { top: 20, right: 15, bottom: 20, left: 60 };
+
+	let width = 500;
+	let height = 200;
+
+	$: xScale = scaleLinear()
+		.domain([0, d.length])
+		.range([padding.left, width - padding.right]);
+
+	$: innerWidth = width - (padding.left + padding.right);
+	$: barWidth = innerWidth / xTicks.length;
+	function getBarHeight(person: any) {
+		const zeroIndex = person.data.indexOf(0);
+		const lastIndex = zeroIndex === -1 ? person.data.length : zeroIndex;
+		return yScale(lastIndex);
+	}
+	// Calculate the maximum number of time periods
+	$: maxTimePeriods = Math.max(...d.map((person) => person.data.length));
+
+	// Update the yScale domain to reflect the maximum number of time periods
+	$: yScale = scaleLinear()
+		.domain([0, maxTimePeriods])
+		.range([height - padding.bottom, padding.top]);
+</script>
+
+<div class="container my-10 grid place-items-center pt-6 text-center content-center">
+	<div class="col-1-1">
+		<h1>Family Spotify Pay Data</h1>
+	</div>
+	<h3 class="pt-10 mb-10">Δες γρήγορα μέχρι πότε έχεις πλερώ το Spotify Family</h3>
+
+	<div class="chart" bind:clientWidth={width} bind:clientHeight={height}>
+		<svg viewBox="0 0 500 200" preserveAspectRatio="xMidYMid meet">
+			<!-- x axis -->
+			<g class="axis x-axis">
+				{#each d as person, i}
+					<g class="tick" transform="translate({xScale(i)},{height})">
+						<text x={barWidth / 2} y="-4">{person.name}</text>
+					</g>
+				{/each}
+			</g>
+
+			<g class="bars">
+				{#each d as person, i}
+					<rect
+						x={xScale(i) + 2}
+						y={getBarHeight(person)}
+						width={barWidth - 4}
+						height={yScale(0) - getBarHeight(person)}
+					/>
+				{/each}
+			</g>
+			<g class="time-periods">
+				{#each timePeriods as period, i}
+					<!-- <text x="0" y="{yScale(i)}" >{period}</text> -->
+					<text x={padding.left - 45} y={yScale(i)} dy=".35em">{period}</text>
+				{/each}
+			</g>
+		</svg>
+	</div>
+
+	<a href="https://revolut.me/angelokyn" class="btn my-10 variant-filled btn-animate">
+		<!-- image with src rev.png -->
+		<img src="https://www.logo.wine/a/logo/Revolut/Revolut-Icon-Logo.wine.svg" alt="Icon" class="h-12 w-12 inline mr-2">
+		<span>Πλερώ</span>
+	</a> 
+</div>
+<footer class="footer absolute inset-x-0 bottom-0 py-4 bg-gray-900 text-white">
+	<div class="container text-center">
+	  Made with love using
+	  <a href="https://skeleton-ui.com/" target="_blank" rel="noopener noreferrer" class="text-blue-400 hover:text-blue-600">
+		Skeleton UI
+	  </a>
+	  and
+	  <a href="https://kit.svelte.dev/" target="_blank" rel="noopener noreferrer" class="text-blue-400 hover:text-blue-600">
+		SvelteKit
+	  </a>
+	</div>
+  </footer>
+<style>
+	.chart {
+		width: 100%;
+		max-width: 500px;
+		margin: 0 auto;
+	}
+
+	svg {
+		flex: auto;
+		width: 100%;
+		height: 200px;
+	}
+
+	.tick {
+		font-family: Helvetica, Arial;
+		font-size: 0.725em;
+		font-weight: 600;
+		color: #ccc;
+	}
+	.time-periods {
+    font-family: Helvetica, Arial;
+    font-size: 0.725em;
+    font-weight: 600;
+    fill: #ffffff;
+}
+
+	.tick text {
+		fill: #ccc;
+		text-anchor: start;
+	}
+
+	.x-axis .tick text {
+		text-anchor: middle;
+	}
+
+	.bars rect {
+		fill: rgb(128, 37, 48);
+		stroke: none;
+		opacity: 0.65;
+	}
+	.btn:hover {
+  background-color: #1c6ef2;
+  color: #fff;
+  transform: scale(1.1);
+  transition: all 0.3s ease-in-out;
+}
+	.btn-animate {
+  position: relative;
+  animation: fadeInTranslate 1s ease-in-out;
+}
+
+@keyframes fadeInTranslate {
+  0% {
+    opacity: 0;
+    transform: translateY(-50%);
+	transform: translateX(-50%);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+	transform: translateX(0);
+  }
+}
+</style>

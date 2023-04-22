@@ -49,7 +49,7 @@
 	<div class="col-1-1">
 		<h1>Family Spotify Pay Data</h1>
 	</div>
-	<h3 class="pt-10 mb-10">Δες γρήγορα μέχρι πότε έχεις πλερώ το Spotify Family</h3>
+	<h3 class="pt-10 mb-10">Δες μέχρι πότε έχεις πλερώ το Spotify Family</h3>
 
 	<div class="chart" bind:clientWidth={width} bind:clientHeight={height}>
 		<svg viewBox="0 0 500 200" preserveAspectRatio="xMidYMid meet">

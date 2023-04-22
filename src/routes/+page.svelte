@@ -4,6 +4,7 @@
 	export let data: PageData;
 	// let data=dedom.body.lines;
 	const d = data.body.lines;
+	const prompt=data.body.prompt;
 
 	const timePeriods: String[] = [];
 	// scan d and for its length do something
@@ -49,7 +50,7 @@
 	<div class="col-1-1">
 		<h1>Family Spotify Pay Data</h1>
 	</div>
-	<h3 class="pt-10 mb-10">Δες μέχρι πότε έχεις πλερώ το Spotify Family</h3>
+	<h4 class="pt-10 mb-10">{prompt}</h4>
 
 	<div class="chart" bind:clientWidth={width} bind:clientHeight={height}>
 		<svg viewBox="0 0 400 200" preserveAspectRatio="xMidYMid meet">
@@ -81,11 +82,14 @@
 		</svg>
 	</div>
 
-	<a href="https://revolut.me/angelokyn" target="_blank" rel="noopener noreferrer" class="btn my-10 variant-filled btn-animate">
+	<a href="https://revolut.me/angelokyn" target="_blank" rel="noopener noreferrer" class="rounded-full btn my-10 variant-filled btn-animate">
 		<!-- image with src rev.png -->
 		<img src="https://www.logo.wine/a/logo/Revolut/Revolut-Icon-Logo.wine.svg" alt="Icon" class="h-12 w-12 inline mr-2">
 		<span>Πλερώ</span>
 	</a> 
+
+	<!-- add an image from this location "static/7j3lph.jpg" -->
+	<img src="/meme.jpg" alt="meme" class="h-90 w-90 mx-auto my-5">
 </div>
 <footer class="footer absolute inset-x-0 bottom-0 py-4 bg-gray-900 text-white">
 	<div class="container text-center">

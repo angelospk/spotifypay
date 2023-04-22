@@ -45,7 +45,7 @@
 		.range([height - padding.bottom, padding.top]);
 </script>
 
-<div class="container my-10 grid place-items-center pt-6 text-center content-center">
+<div class="container my-10 grid place-items-center pt-6 text-center content-center overflow-auto scrollbar-hide">
 	<div class="col-1-1">
 		<h1>Family Spotify Pay Data</h1>
 	</div>
@@ -118,6 +118,7 @@
 		font-weight: 600;
 		color: #ccc;
 	}
+
 	.time-periods {
     font-family: Helvetica, Arial;
     font-size: 0.725em;

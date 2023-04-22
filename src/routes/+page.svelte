@@ -52,7 +52,7 @@
 	<h3 class="pt-10 mb-10">Δες μέχρι πότε έχεις πλερώ το Spotify Family</h3>
 
 	<div class="chart" bind:clientWidth={width} bind:clientHeight={height}>
-		<svg viewBox="0 0 500 200" preserveAspectRatio="xMidYMid meet">
+		<svg viewBox="0 0 400 200" preserveAspectRatio="xMidYMid meet">
 			<!-- x axis -->
 			<g class="axis x-axis">
 				{#each d as person, i}
@@ -81,7 +81,7 @@
 		</svg>
 	</div>
 
-	<a href="https://revolut.me/angelokyn" class="btn my-10 variant-filled btn-animate">
+	<a href="https://revolut.me/angelokyn" target="_blank" rel="noopener noreferrer" class="btn my-10 variant-filled btn-animate">
 		<!-- image with src rev.png -->
 		<img src="https://www.logo.wine/a/logo/Revolut/Revolut-Icon-Logo.wine.svg" alt="Icon" class="h-12 w-12 inline mr-2">
 		<span>Πλερώ</span>
@@ -90,7 +90,7 @@
 <footer class="footer absolute inset-x-0 bottom-0 py-4 bg-gray-900 text-white">
 	<div class="container text-center">
 	  Made with love using
-	  <a href="https://skeleton-ui.com/" target="_blank" rel="noopener noreferrer" class="text-blue-400 hover:text-blue-600">
+	  <a href="https://www.skeleton.dev/" target="_blank" rel="noopener noreferrer" class="text-blue-400 hover:text-blue-600">
 		Skeleton UI
 	  </a>
 	  and
@@ -101,8 +101,8 @@
   </footer>
 <style>
 	.chart {
-		width: 100%;
-		max-width: 500px;
+		/* width: 100%; */
+		max-width: flex;
 		margin: 0 auto;
 	}
 

@@ -91,7 +91,7 @@
 	<!-- add an image from this location "static/7j3lph.jpg" -->
 	<img src="/meme.jpg" alt="meme" class="h-90 w-90 mx-auto my-5">
 </div>
-<footer class="footer absolute inset-x-0 bottom-0 py-0 bg-gray-900 text-white content-center">
+<footer class="footer absolute inset-x-0 bottom-0 py-0  text-white content-center">
 	<div class="container text-center text-sm">
 	  Made with love using
 	  <a href="https://www.skeleton.dev/" target="_blank" rel="noopener noreferrer" class="text-blue-400 hover:text-blue-600">

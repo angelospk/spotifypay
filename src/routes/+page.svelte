@@ -7,9 +7,21 @@
 	const prompt=data.body.prompt;
 
 	const timePeriods: String[] = [];
+	
+	
+	// find num of timeperiods
+	let maxTimePeriods = 0;
+	try{
+		maxTimePeriods = Math.max(...d.map((person) => person.data.length));
+	}
+	catch (e){
+		console.log(e);
+	}
+
 	// scan d and for its length do something
+
 	let year = 22;
-	for (let i = 0; i < d.length; i++) {
+	for (let i = 0; i < maxTimePeriods; i++) {
 		if (i % 2 == 0) {
 			let str = 'Μαρ ' + year.toString();
 			timePeriods.push(str);
@@ -19,6 +31,7 @@
 			year++;
 		}
 	}
+	console.log(d);
 	const xTicks = d.map((person) => person.name);
 	const yTicks = [0, 1, 2];
 	const padding = { top: 20, right: 15, bottom: 20, left: 60 };
@@ -71,12 +84,18 @@
 						width={barWidth - 4}
 						height={yScale(0) - getBarHeight(person)}
 					/>
+					
 				{/each}
+				<!-- create blank dotted line above -->
 			</g>
 			<g class="time-periods">
 				{#each timePeriods as period, i}
 					<!-- <text x="0" y="{yScale(i)}" >{period}</text> -->
 					<text x={padding.left - 45} y={yScale(i)} dy=".35em">{period}</text>
+				
+					<!-- create dotted line below -->
+					 <line x1={50} y1={yScale(i)} x2={width} y2={yScale(i)} stroke="white" stroke-width="1" stroke-dasharray="3,3" />
+
 				{/each}
 			</g>
 		</svg>

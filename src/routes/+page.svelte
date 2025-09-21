@@ -96,10 +96,10 @@
 					<!-- create dotted line below -->
 					 <line x1={50} y1={yScale(i)} x2={width} y2={yScale(i)} stroke={period === 'Σεπ 23' || period === 'Σεπ 25' ? 'red' : 'white'} stroke-width="1" stroke-dasharray="3,3" />
 					 {#if period === 'Σεπ 23'}
-						<text x={width - padding.right} y={yScale(i)} dy=".35em" fill="red">13€</text>
+						<text x={width - padding.right-12} y={yScale(i)} dy=".35em" font-size="1.2em" fill="red">13€</text>
 					 {/if}
 					 {#if period === 'Σεπ 25'}
-						<text x={width - padding.right} y={yScale(i)} dy=".35em" fill="red">15€</text>
+						<text x={width - padding.right-12} y={yScale(i)} dy=".35em" font-size="1.2em" fill="red">15€</text>
 					 {/if}
 				{/each}
 			</g>

@@ -27,7 +27,7 @@ export function PaymentCalculator() {
     currentPeriodIndex,
   } = useSpotifyData();
   const [selectedPerson, setSelectedPerson] = useState<string>("");
-  const [includeNextSemester, setIncludeNextSemester] = useState(false);
+  const [includeCurrentSemester, setIncludeCurrentSemester] = useState(true);
   const [wantsReminders, setWantsReminders] = useState(false);
   const [email, setEmail] = useState("");
   const [owedAmount, setOwedAmount] = useState(0);
@@ -48,9 +48,9 @@ export function PaymentCalculator() {
 
         // Calculate owed amount
         let total = 0;
-        const targetIndex = includeNextSemester
-          ? currentPeriodIndex + 1
-          : currentPeriodIndex;
+        const targetIndex = includeCurrentSemester
+          ? currentPeriodIndex
+          : currentPeriodIndex - 1;
 
         // Sum up the prices from the period after they last paid to the target period
         for (let i = lastPaidIndex + 1; i <= targetIndex; i++) {
@@ -64,7 +64,7 @@ export function PaymentCalculator() {
     }
   }, [
     selectedPerson,
-    includeNextSemester,
+    includeCurrentSemester,
     data,
     processedPeriods,
     currentPeriodIndex,
@@ -125,10 +125,13 @@ export function PaymentCalculator() {
         break;
       }
     }
-    lastPaidIndex++; //valid until next semester
-    return lastPaidIndex >= 0
-      ? processedPeriods[lastPaidIndex]?.label
-      : "Καμία πληρωμή";
+
+    if (lastPaidIndex < 0) {
+      return "Καμία πληρωμή";
+    }
+
+    const paidUntilIndex = lastPaidIndex + 1;
+    return processedPeriods[paidUntilIndex]?.label ?? "Πλήρως Εξοφλημένο";
   };
 
   if (loading) {
@@ -190,22 +193,21 @@ export function PaymentCalculator() {
               </p>
             </div>
 
-            {/* Include Next Semester Toggle */}
+            {/* Include Current Semester Toggle */}
             <div className="flex items-center justify-between bg-gray-700/50 p-4 rounded-lg">
               <div className="space-y-1">
-                <Label htmlFor="next-semester">
-                  Να συμπεριλάβω και το επόμενο εξάμηνο;
+                <Label htmlFor="current-semester">
+                  Να συμπεριληφθεί και το τρέχον εξάμηνο;
                 </Label>
                 <p className="text-sm text-gray-400">
-                  {currentPeriod?.label || "N/A"} -{nextPeriod?.label || "N/A"}{" "}
-                  (τρέχον)
-                  {includeNextSemester ? ` + επόμενο εξάμηνο` : ""}
+                  {currentPeriod?.label || "N/A"} -{" "}
+                  {nextPeriod?.label || "N/A"} (τρέχον)
                 </p>
               </div>
               <Switch
-                id="next-semester"
-                checked={includeNextSemester}
-                onCheckedChange={setIncludeNextSemester}
+                id="current-semester"
+                checked={includeCurrentSemester}
+                onCheckedChange={setIncludeCurrentSemester}
               />
             </div>
 
@@ -216,7 +218,9 @@ export function PaymentCalculator() {
               <p className="text-sm text-purple-100">
                 {owedAmount === 0
                   ? "🎉 Είστε ενημερωμένοι!"
-                  : `έως και το  ${includeNextSemester ? "τρέχον & επόμενο εξάμηνο" : "τρέχον εξάμηνο"}`}
+                  : includeCurrentSemester
+                  ? "έως και το τρέχον εξάμηνο"
+                  : "έως το τρέχον εξάμηνο"}
               </p>
             </div>
 

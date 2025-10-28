@@ -108,12 +108,14 @@ export function PaymentChart() {
       }
     }
 
+    const paidUntilIndex = lastPaidIndex + 1;
+
     return {
       name: member.name,
-      value: lastPaidIndex >= 0 ? lastPaidIndex + 1 : 0, // +1 to show as bar height
+      value: lastPaidIndex >= 0 ? paidUntilIndex : 0,
       paidUntilLabel:
         lastPaidIndex >= 0
-          ? processedPeriods[lastPaidIndex]?.label
+          ? processedPeriods[paidUntilIndex]?.label ?? "Πλήρως Εξοφλημένο"
           : "Καμία πληρωμή",
     };
   });

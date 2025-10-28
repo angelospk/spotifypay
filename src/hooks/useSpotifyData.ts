@@ -48,8 +48,8 @@ function getPriceForPeriod(label: string): number {
   // Sep 2023 to Aug 2025: 13€
   // Sep 2025 onwards: 15€
 
-  if (year < 2023) return 10;
-  if (year === 2023 && season === "Μαρ") return 10;
+  if (year < 2023) return 12;
+  if (year === 2023 && season === "Μαρ") return 12;
   if (year === 2023 && season === "Σεπ") return 13;
   if (year === 2024) return 13;
   if (year === 2025 && season === "Μαρ") return 13;
